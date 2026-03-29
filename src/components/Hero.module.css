@@ -49,33 +49,3 @@
   justify-content: center;
 }
 
-/* Trust stats */
-.stats {
-  display: flex;
-  gap: var(--space-3xl);
-  margin-top: var(--space-3xl);
-  padding-top: var(--space-2xl);
-  border-top: 1px solid var(--border);
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-xs);
-}
-
-.statValue {
-  font-size: var(--font-2xl);
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-}
-
-.statLabel {
-  font-size: var(--font-xs);
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 500;
-}

@@ -1,11 +1,5 @@
 import styles from "./Hero.module.css";
 
-const stats = [
-  { value: "8+", label: "Years Experience" },
-  { value: "50+", label: "Projects Delivered" },
-  { value: "100%", label: "Client Satisfaction" },
-];
-
 export default function Hero() {
   return (
     <section className={styles.hero} id="hero">
@@ -26,14 +20,6 @@ export default function Hero() {
           <a href="#work" className="btn btn-outline" id="hero-learn-more">
             See Our Work →
           </a>
-        </div>
-        <div className={styles.stats}>
-          {stats.map((stat) => (
-            <div key={stat.label} className={styles.stat}>
-              <span className={styles.statValue}>{stat.value}</span>
-              <span className={styles.statLabel}>{stat.label}</span>
-            </div>
-          ))}
         </div>
       </div>
     </section>
