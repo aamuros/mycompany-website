@@ -2,7 +2,9 @@ import styles from "./Footer.module.css";
 
 const footerLinks = [
   { label: "Services", href: "#services" },
+  { label: "Process", href: "#process" },
   { label: "Work", href: "#work" },
+  { label: "Testimonials", href: "#testimonials" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -28,6 +30,12 @@ export default function Footer() {
             </svg>
             <span>Construct</span>
           </div>
+          <p className={styles.tagline}>
+            We build digital products that work.
+          </p>
+          <a href="mailto:hello@construct.dev" className={styles.email}>
+            hello@construct.dev
+          </a>
           <p className={styles.copyright}>
             © {year} Construct. All rights reserved.
           </p>

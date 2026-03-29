@@ -41,9 +41,26 @@
   color: var(--text-primary);
 }
 
+.tagline {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.email {
+  font-size: var(--font-sm);
+  color: var(--text-tertiary);
+  transition: color var(--transition-fast);
+}
+
+.email:hover {
+  color: var(--text-primary);
+}
+
 .copyright {
   font-size: var(--font-xs);
   color: var(--text-tertiary);
+  margin-top: var(--space-sm);
 }
 
 .links {

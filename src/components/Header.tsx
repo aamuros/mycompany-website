@@ -5,6 +5,7 @@ import styles from "./Header.module.css";
 
 const navLinks = [
   { label: "Services", href: "#services" },
+  { label: "Process", href: "#process" },
   { label: "Work", href: "#work" },
   { label: "Contact", href: "#contact" },
 ];
