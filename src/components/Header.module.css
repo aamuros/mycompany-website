@@ -12,7 +12,7 @@
 }
 
 .header.scrolled {
-  background: rgba(10, 10, 10, 0.8);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom-color: var(--border);
@@ -34,34 +34,50 @@
   }
 }
 
+/* Logo */
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: 0.6rem;
   font-weight: 700;
   font-size: var(--font-lg);
   letter-spacing: -0.02em;
   color: var(--text-primary);
+  z-index: 10;
 }
 
-.logoMark {
+.logoIcon {
   width: 28px;
   height: 28px;
-  border-radius: var(--radius-sm);
-  background: var(--text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--text-primary);
 }
 
-.logoMark svg {
-  width: 16px;
-  height: 16px;
-  color: var(--bg-primary);
+/* Nav */
+.nav {
+  display: none;
+  gap: var(--space-xl);
 }
 
+@media (min-width: 768px) {
+  .nav {
+    display: flex;
+  }
+}
+
+.navLink {
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--text-primary);
+}
+
+/* CTA */
 .cta {
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 0.5rem 1.25rem;
@@ -74,7 +90,87 @@
   white-space: nowrap;
 }
 
+@media (min-width: 768px) {
+  .cta {
+    display: inline-flex;
+  }
+}
+
 .cta:hover {
-  background: var(--text-secondary);
+  background: var(--accent-hover);
   transform: translateY(-1px);
+}
+
+/* Mobile Menu Button */
+.menuBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .menuBtn {
+    display: none;
+  }
+}
+
+.menuLine {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all var(--transition-fast);
+}
+
+.menuLine.menuLineOpen:first-child {
+  transform: rotate(45deg) translate(2.5px, 2.5px);
+}
+
+.menuLine.menuLineOpen:last-child {
+  transform: rotate(-45deg) translate(2.5px, -2.5px);
+}
+
+/* Mobile Nav Overlay */
+.nav.navOpen {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0;
+  background: var(--bg-primary);
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xl);
+  z-index: 5;
+}
+
+.nav.navOpen .navLink {
+  font-size: var(--font-2xl);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Mobile CTA — only visible inside mobile overlay */
+.mobileCta {
+  display: none;
+}
+
+.nav.navOpen .mobileCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: var(--font-lg);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  margin-top: var(--space-md);
+  transition: all var(--transition-base);
+}
+
+.nav.navOpen .mobileCta:hover {
+  background: var(--accent-hover);
 }

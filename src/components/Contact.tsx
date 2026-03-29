@@ -28,6 +28,7 @@ export default function Contact() {
       email: formData.get("email") as string,
       company: formData.get("company") as string,
       message: formData.get("message") as string,
+      website: formData.get("website") as string,
     };
 
     // Client-side validation
@@ -77,31 +78,33 @@ export default function Contact() {
   return (
     <section className={`section ${styles.contact}`} id="contact">
       <div className="container">
-        <p className="section-label">Get Started</p>
-        <h2 className="section-title">
-          Let&apos;s build something
-          <br />
-          that works.
-        </h2>
         <div className={styles.wrapper}>
-          <div className={styles.info}>
-            <p className={styles.infoText}>
-              Tell us about your challenge. No commitment, no sales pitch — just
-              a conversation about what&apos;s possible.
+          <div className={styles.left}>
+            <p className="section-label">Get in Touch</p>
+            <h2 className="section-title">
+              Let&apos;s build something
+              <br />
+              together.
+            </h2>
+            <p className={styles.desc}>
+              Tell us about your project. No commitment, no sales pitch — just a
+              conversation about what&apos;s possible.
             </p>
-            <div className={styles.infoDetail}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-              <span>hello@construct.dev</span>
-            </div>
-            <div className={styles.infoDetail}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-              <span>Usually respond within 24 hours</span>
+            <div className={styles.details}>
+              <div className={styles.detail}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <span>hello@construct.dev</span>
+              </div>
+              <div className={styles.detail}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span>Usually respond within 24 hours</span>
+              </div>
             </div>
           </div>
 
@@ -159,6 +162,7 @@ export default function Contact() {
               <textarea
                 id="message"
                 name="message"
+                rows={5}
                 placeholder="Tell us about your project or challenge..."
                 className={`${styles.textarea} ${errors.message ? styles.inputError : ""}`}
                 required
@@ -166,6 +170,18 @@ export default function Contact() {
               {errors.message && (
                 <span className={styles.errorText}>{errors.message}</span>
               )}
+            </div>
+
+            {/* Honeypot — hidden from real users, bots fill it and get rejected */}
+            <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, overflow: "hidden" }}>
+              <label htmlFor="website">Website</label>
+              <input
+                type="text"
+                id="website"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+              />
             </div>
 
             <button

@@ -2,42 +2,42 @@
   min-height: 100dvh;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
   padding-top: var(--header-height);
+  text-align: center;
 }
 
 .heroContent {
   position: relative;
   z-index: 1;
-  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: var(--space-4xl) 0;
 }
 
 .headline {
   font-size: var(--font-display);
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.03em;
   color: var(--text-primary);
   margin-bottom: var(--space-lg);
 }
 
-.headlineAccent {
-  color: var(--text-secondary);
-}
-
 .subline {
-  font-size: var(--font-xl);
+  font-size: var(--font-lg);
   color: var(--text-secondary);
   line-height: 1.7;
-  max-width: 560px;
+  max-width: 520px;
   margin-bottom: var(--space-2xl);
 }
 
 @media (min-width: 768px) {
   .subline {
-    font-size: var(--font-2xl);
+    font-size: var(--font-xl);
   }
 }
 
@@ -46,29 +46,36 @@
   align-items: center;
   gap: var(--space-md);
   flex-wrap: wrap;
+  justify-content: center;
 }
 
-/* Background grid */
-.gridBg {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, black 20%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, black 20%, transparent 70%);
+/* Trust stats */
+.stats {
+  display: flex;
+  gap: var(--space-3xl);
+  margin-top: var(--space-3xl);
+  padding-top: var(--space-2xl);
+  border-top: 1px solid var(--border);
 }
 
-/* Glow orb */
-.glow {
-  position: absolute;
-  top: 20%;
-  right: -10%;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  filter: blur(80px);
-  pointer-events: none;
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.statValue {
+  font-size: var(--font-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.statLabel {
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
 }

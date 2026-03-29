@@ -1,0 +1,136 @@
+.work {
+  border-top: 1px solid var(--border);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+  background: var(--bg-primary);
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transform: translateY(-3px);
+}
+
+/* Preview area with gradient + mock window */
+.cardPreview {
+  padding: var(--space-xl) var(--space-lg) 0;
+  display: flex;
+  justify-content: center;
+  min-height: 180px;
+}
+
+.mockWindow {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: var(--space-md);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.mockDots {
+  display: flex;
+  gap: 6px;
+  margin-bottom: var(--space-md);
+}
+
+.mockDots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e5e7eb;
+}
+
+.mockDots span:first-child {
+  background: #fca5a5;
+}
+
+.mockDots span:nth-child(2) {
+  background: #fcd34d;
+}
+
+.mockDots span:nth-child(3) {
+  background: #86efac;
+}
+
+.mockContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mockLine {
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 4px;
+}
+
+/* Card body */
+.cardBody {
+  padding: var(--space-xl);
+}
+
+.cardCategory {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+  letter-spacing: 0.02em;
+}
+
+.cardTitle {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+  letter-spacing: -0.01em;
+}
+
+.cardDesc {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-md);
+}
+
+.cardTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.tag {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: var(--font-xs);
+  color: var(--text-tertiary);
+  font-weight: 500;
+}

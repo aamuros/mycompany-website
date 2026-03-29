@@ -4,23 +4,25 @@ import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Systems Development Consultancy | Custom Solutions for Business",
+  title: "Construct — We Build Digital Products That Work",
   description:
-    "We build custom systems and solutions that simplify complexity. Expert systems development consultancy helping businesses streamline operations with reliable, efficient technology.",
+    "We design and build websites, applications, and systems for businesses that need reliable, high-quality digital solutions. Let's build something great together.",
   keywords: [
+    "web development",
+    "application development",
     "systems development",
     "custom software",
-    "consultancy",
-    "process automation",
-    "system integration",
+    "digital products",
+    "website design",
   ],
   openGraph: {
-    title: "Systems Development Consultancy",
+    title: "Construct — We Build Digital Products That Work",
     description:
-      "We build custom systems and solutions that simplify complexity.",
+      "Websites, applications, and systems — engineered for your business.",
     type: "website",
   },
 };

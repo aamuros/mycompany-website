@@ -1,33 +1,33 @@
 /* ═══════════════════════════════════════════
-   Design System — Dark Theme Tokens
+   Design System — Light Theme (Ollama-inspired)
    ═══════════════════════════════════════════ */
 
 :root {
-  /* Colors */
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #111111;
-  --bg-tertiary: #1a1a1a;
-  --bg-card: #141414;
-  --bg-card-hover: #1c1c1c;
-  --bg-glass: rgba(255, 255, 255, 0.03);
-  --bg-glass-hover: rgba(255, 255, 255, 0.06);
+  /* Colors — Clean Light */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f9fafb;
+  --bg-glass: rgba(0, 0, 0, 0.02);
+  --bg-glass-hover: rgba(0, 0, 0, 0.04);
 
-  --text-primary: #fafafa;
-  --text-secondary: #a1a1a1;
-  --text-tertiary: #666666;
-  --text-muted: #444444;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --text-muted: #d1d5db;
 
-  --accent: #3b82f6;
-  --accent-hover: #60a5fa;
-  --accent-subtle: rgba(59, 130, 246, 0.1);
-  --accent-glow: rgba(59, 130, 246, 0.15);
+  --accent: #111827;
+  --accent-hover: #374151;
+  --accent-subtle: rgba(17, 24, 39, 0.06);
+  --accent-glow: rgba(17, 24, 39, 0.08);
 
-  --border: rgba(255, 255, 255, 0.06);
-  --border-hover: rgba(255, 255, 255, 0.12);
-  --border-accent: rgba(59, 130, 246, 0.3);
+  --border: #e5e7eb;
+  --border-hover: #d1d5db;
+  --border-accent: #111827;
 
-  --success: #22c55e;
-  --error: #ef4444;
+  --success: #16a34a;
+  --error: #dc2626;
 
   /* Typography Scale */
   --font-xs: 0.75rem;
@@ -39,7 +39,7 @@
   --font-3xl: 2rem;
   --font-4xl: 2.75rem;
   --font-5xl: 3.75rem;
-  --font-display: clamp(2.5rem, 5vw, 4.5rem);
+  --font-display: clamp(2.5rem, 5vw, 4rem);
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -53,13 +53,14 @@
   --space-5xl: 8rem;
 
   /* Layout */
-  --max-width: 1200px;
+  --max-width: 1100px;
   --header-height: 64px;
 
   /* Borders */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
 
   /* Transitions */
@@ -149,7 +150,7 @@ img {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--accent);
+  color: var(--text-tertiary);
   margin-bottom: var(--space-md);
 }
 
@@ -157,6 +158,7 @@ img {
   font-size: var(--font-3xl);
   font-weight: 700;
   line-height: 1.2;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
   margin-bottom: var(--space-md);
 }
@@ -194,19 +196,19 @@ img {
 }
 
 .btn-primary:hover {
-  background: var(--text-secondary);
+  background: var(--accent-hover);
   transform: translateY(-1px);
 }
 
 .btn-outline {
-  border: 1px solid var(--border-hover);
+  border: 1px solid var(--border);
   color: var(--text-primary);
   background: transparent;
 }
 
 .btn-outline:hover {
-  border-color: var(--text-secondary);
-  background: var(--bg-glass-hover);
+  border-color: var(--text-primary);
+  background: var(--accent-subtle);
 }
 
 /* Visually hidden */
@@ -219,14 +221,4 @@ img {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   border: 0;
-}
-
-/* Dot grid background pattern */
-.dot-grid {
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.03) 1px,
-    transparent 1px
-  );
-  background-size: 32px 32px;
 }

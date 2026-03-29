@@ -1,27 +1,39 @@
 import styles from "./Hero.module.css";
 
+const stats = [
+  { value: "8+", label: "Years Experience" },
+  { value: "50+", label: "Projects Delivered" },
+  { value: "100%", label: "Client Satisfaction" },
+];
+
 export default function Hero() {
   return (
     <section className={styles.hero} id="hero">
-      <div className={styles.gridBg} aria-hidden="true" />
-      <div className={styles.glow} aria-hidden="true" />
       <div className={`container ${styles.heroContent}`}>
         <h1 className={styles.headline}>
-          We build systems
+          We build digital
           <br />
-          <span className={styles.headlineAccent}>that simplify complexity.</span>
+          products that work.
         </h1>
         <p className={styles.subline}>
-          Custom software, integrations, and automation — engineered to
-          streamline your operations and scale with your business.
+          Websites, applications, and systems — designed and engineered
+          for businesses that need reliable, high-quality solutions.
         </p>
         <div className={styles.actions}>
           <a href="#contact" className="btn btn-primary" id="hero-cta">
-            Start a Conversation
+            Start a Project
           </a>
-          <a href="#services" className="btn btn-outline" id="hero-learn-more">
-            What We Build →
+          <a href="#work" className="btn btn-outline" id="hero-learn-more">
+            See Our Work →
           </a>
+        </div>
+        <div className={styles.stats}>
+          {stats.map((stat) => (
+            <div key={stat.label} className={styles.stat}>
+              <span className={styles.statValue}>{stat.value}</span>
+              <span className={styles.statLabel}>{stat.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
