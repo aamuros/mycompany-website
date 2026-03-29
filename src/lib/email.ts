@@ -87,17 +87,23 @@ export async function sendContactNotification(
 
     if (error) {
       console.error("Resend error:", error);
-      return { success: false, error: "Failed to send email" };
+      return {
+        success: false,
+        error: error.message || "Failed to send email",
+      };
     }
 
     return { success: true };
   } catch (err) {
     if (err instanceof TimeoutError) {
       console.error("Email send timeout after", EMAIL_TIMEOUT_MS, "ms");
-      return { success: false, error: "Email service timeout" };
+      return { success: false, error: "Email service timed out. Please try again." };
     }
     console.error("Email send error:", err);
-    return { success: false, error: "Failed to send email" };
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : "Failed to send email",
+    };
   }
 }
 

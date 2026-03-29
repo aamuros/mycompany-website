@@ -5,8 +5,9 @@ import styles from "./Header.module.css";
 
 const navLinks = [
   { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
+  { label: "Pricing", href: "#pricing" },
   { label: "Work", href: "#work" },
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -39,12 +40,10 @@ export default function Header() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <rect width="32" height="32" rx="8" fill="currentColor" />
-            <path
-              d="M10 22V10h4.5c1.4 0 2.5.4 3.2 1.1.7.7 1.1 1.6 1.1 2.7 0 1.1-.4 2-1.1 2.7-.7.7-1.8 1.1-3.2 1.1H13v4.4h-3z"
-              fill="white"
-            />
+            <path d="M10 24L16 8L22 24" stroke="white" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round"/>
+            <path d="M13.5 19H18.5" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
           </svg>
-          <span>Construct</span>
+          <span>Adi</span>
         </a>
 
         <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>

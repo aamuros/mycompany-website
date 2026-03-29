@@ -51,7 +51,10 @@ export async function POST(request: Request) {
   const emailResult = await sendContactNotification(validation.data);
   if (!emailResult.success) {
     return NextResponse.json(
-      { success: false, error: "Failed to process your request. Please try again." },
+      {
+        success: false,
+        error: emailResult.error || "Failed to process your request. Please try again.",
+      },
       { status: 500 }
     );
   }

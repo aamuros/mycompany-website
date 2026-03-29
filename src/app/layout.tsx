@@ -8,9 +8,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Construct — We Build Digital Products That Work",
+  title: "Adi — Digital Products That Work",
   description:
-    "We design and build websites, applications, and systems for businesses in the Philippines and beyond. Reliable, high-quality digital solutions — let's build something great together.",
+    "I design and build websites, applications, and systems for businesses in the Philippines and beyond. Reliable, high-quality digital solutions — let's build something great together.",
   keywords: [
     "web development Philippines",
     "software development Philippines",
@@ -21,9 +21,9 @@ export const metadata: Metadata = {
     "website design",
   ],
   openGraph: {
-    title: "Construct — We Build Digital Products That Work",
+    title: "Adi — Digital Products That Work",
     description:
-      "Websites, applications, and systems — engineered for your business. Based in the Philippines.",
+      "Websites, applications, and systems — built for your business. Based in the Philippines.",
     type: "website",
   },
 };

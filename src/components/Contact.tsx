@@ -31,7 +31,6 @@ export default function Contact() {
       website: formData.get("website") as string,
     };
 
-    // Client-side validation
     const clientErrors: FormErrors = {};
     if (!data.name || data.name.trim().length < 2)
       clientErrors.name = "Name must be at least 2 characters";
@@ -87,16 +86,23 @@ export default function Contact() {
               together.
             </h2>
             <p className={styles.desc}>
-              Tell us about your project. No commitment, no sales pitch — just a
-              conversation about what&apos;s possible.
+              Have a project in mind? Drop me a message or reach out directly —
+              no commitment, just a conversation about what&apos;s possible.
             </p>
+
             <div className={styles.details}>
               <div className={styles.detail}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                <a href="mailto:hello@construct.dev">hello@construct.dev</a>
+                <a href="mailto:mros.adrian.adi@gmail.com">mros.adrian.adi@gmail.com</a>
+              </div>
+              <div className={styles.detail}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.0 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+                </svg>
+                <a href="tel:+639660020335">+639 660 020 335</a>
               </div>
               <div className={styles.detail}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -110,22 +116,34 @@ export default function Contact() {
                   <circle cx="12" cy="12" r="10" />
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
-                <span>Usually respond within 24 hours</span>
+                <span>Usually responds within 24 hours</span>
               </div>
             </div>
 
             <div className={styles.directContact}>
-              <p className={styles.directLabel}>Prefer to reach out directly?</p>
+              <p className={styles.directLabel}>Prefer to chat directly?</p>
               <div className={styles.directLinks}>
                 <a
-                  href="mailto:hello@construct.dev"
+                  href="https://m.me/mros.adii"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={styles.directLink}
                 >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                    <polyline points="22,6 12,13 2,6" />
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.652V24l4.088-2.242c1.092.3 2.246.464 3.443.464C18.627 22.222 24 17.248 24 11.111S18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8l3.131 3.259L19.752 8l-6.561 6.963z" />
                   </svg>
-                  Email Us
+                  Messenger
+                </a>
+                <a
+                  href="https://www.facebook.com/mros.adii/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.directLink}
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                  Facebook
                 </a>
               </div>
             </div>
@@ -157,7 +175,7 @@ export default function Contact() {
                   type="email"
                   id="email"
                   name="email"
-                  placeholder="you@company.com"
+                  placeholder="you@example.com"
                   className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
                   required
                 />
@@ -186,7 +204,7 @@ export default function Contact() {
                 id="message"
                 name="message"
                 rows={5}
-                placeholder="Tell us about your project — what do you need built?"
+                placeholder="Tell me about your project — what do you need built?"
                 className={`${styles.textarea} ${errors.message ? styles.inputError : ""}`}
                 required
               />

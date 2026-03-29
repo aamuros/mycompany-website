@@ -28,10 +28,12 @@
   margin-bottom: var(--space-xl);
 }
 
+/* Info rows */
 .details {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+  margin-bottom: var(--space-xl);
 }
 
 .detail {
@@ -43,8 +45,8 @@
 }
 
 .detail svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   color: var(--text-tertiary);
   flex-shrink: 0;
 }
@@ -58,9 +60,8 @@
   color: var(--text-primary);
 }
 
-/* Direct contact block */
+/* Quick action links */
 .directContact {
-  margin-top: var(--space-xl);
   padding-top: var(--space-xl);
   border-top: 1px solid var(--border);
 }
@@ -87,18 +88,22 @@
   font-size: var(--font-sm);
   font-weight: 500;
   color: var(--text-secondary);
+  background: var(--bg-primary);
   transition: all var(--transition-base);
+  text-decoration: none;
 }
 
 .directLink:hover {
   border-color: var(--text-primary);
   color: var(--text-primary);
-  background: var(--accent-subtle);
+  background: var(--bg-primary);
+  transform: translateY(-1px);
 }
 
 .directLink svg {
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
 }
 
 /* Form */
@@ -143,6 +148,7 @@
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
   outline: none;
   width: 100%;
+  font-family: inherit;
 }
 
 .input::placeholder,
@@ -182,6 +188,7 @@
   font-size: var(--font-base);
   cursor: pointer;
   transition: all var(--transition-base);
+  font-family: inherit;
 }
 
 .submit:hover:not(:disabled) {
