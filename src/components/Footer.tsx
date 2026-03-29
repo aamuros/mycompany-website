@@ -36,6 +36,7 @@ export default function Footer() {
           <a href="mailto:hello@construct.dev" className={styles.email}>
             hello@construct.dev
           </a>
+          <p className={styles.location}>Philippines</p>
           <p className={styles.copyright}>
             © {year} Construct. All rights reserved.
           </p>

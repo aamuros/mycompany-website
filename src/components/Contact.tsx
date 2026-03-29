@@ -96,7 +96,14 @@ export default function Contact() {
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                <span>hello@construct.dev</span>
+                <a href="mailto:hello@construct.dev">hello@construct.dev</a>
+              </div>
+              <div className={styles.detail}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span>Philippines</span>
               </div>
               <div className={styles.detail}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -104,6 +111,22 @@ export default function Contact() {
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
                 <span>Usually respond within 24 hours</span>
+              </div>
+            </div>
+
+            <div className={styles.directContact}>
+              <p className={styles.directLabel}>Prefer to reach out directly?</p>
+              <div className={styles.directLinks}>
+                <a
+                  href="mailto:hello@construct.dev"
+                  className={styles.directLink}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                  Email Us
+                </a>
               </div>
             </div>
           </div>
@@ -163,7 +186,7 @@ export default function Contact() {
                 id="message"
                 name="message"
                 rows={5}
-                placeholder="Tell us about your project or challenge..."
+                placeholder="Tell us about your project — what do you need built?"
                 className={`${styles.textarea} ${errors.message ? styles.inputError : ""}`}
                 required
               />

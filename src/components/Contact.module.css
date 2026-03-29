@@ -49,6 +49,58 @@
   flex-shrink: 0;
 }
 
+.detail a {
+  color: var(--text-tertiary);
+  transition: color var(--transition-fast);
+}
+
+.detail a:hover {
+  color: var(--text-primary);
+}
+
+/* Direct contact block */
+.directContact {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--border);
+}
+
+.directLabel {
+  font-size: var(--font-sm);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-md);
+}
+
+.directLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.directLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all var(--transition-base);
+}
+
+.directLink:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+  background: var(--accent-subtle);
+}
+
+.directLink svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* Form */
 .form {
   display: flex;
