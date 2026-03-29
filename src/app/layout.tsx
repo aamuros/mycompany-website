@@ -10,9 +10,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Construct — We Build Digital Products That Work",
   description:
-    "We design and build websites, applications, and systems for businesses that need reliable, high-quality digital solutions. Let's build something great together.",
+    "We design and build websites, applications, and systems for businesses in the Philippines and beyond. Reliable, high-quality digital solutions — let's build something great together.",
   keywords: [
-    "web development",
+    "web development Philippines",
+    "software development Philippines",
     "application development",
     "systems development",
     "custom software",
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Construct — We Build Digital Products That Work",
     description:
-      "Websites, applications, and systems — engineered for your business.",
+      "Websites, applications, and systems — engineered for your business. Based in the Philippines.",
     type: "website",
   },
 };
