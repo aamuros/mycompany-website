@@ -43,7 +43,7 @@ export default function Header() {
             <path d="M10 24L16 8L22 24" stroke="white" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round"/>
             <path d="M13.5 19H18.5" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
           </svg>
-          <span>Adi</span>
+          <span>ADIstudio</span>
         </a>
 
         <nav className={`${styles.nav} ${menuOpen ? styles.navOpen : ""}`}>

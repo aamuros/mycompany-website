@@ -26,7 +26,7 @@ export default function Footer() {
               <path d="M10 24L16 8L22 24" stroke="white" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round"/>
               <path d="M13.5 19H18.5" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
             </svg>
-            <span>Adi</span>
+            <span>ADIstudio</span>
           </div>
           <p className={styles.tagline}>
             We build digital products that work.
@@ -36,7 +36,7 @@ export default function Footer() {
           </a>
           <p className={styles.location}>Philippines</p>
           <p className={styles.copyright}>
-            © {year} Adi. All rights reserved.
+            © {year} ADIstudio. All rights reserved.
           </p>
         </div>
         <nav className={styles.links}>

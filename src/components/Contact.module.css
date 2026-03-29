@@ -208,6 +208,52 @@
   }
 }
 
+/* Success panel */
+.successPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-3xl) var(--space-xl);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+}
+
+.successIcon {
+  color: var(--success);
+}
+
+.successTitle {
+  font-size: var(--font-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.successText {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.successReset {
+  margin-top: var(--space-sm);
+  align-self: flex-start;
+  font-size: var(--font-sm);
+  color: var(--text-tertiary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.successReset:hover {
+  color: var(--text-primary);
+}
+
 /* Status messages */
 .statusMessage {
   padding: var(--space-md) var(--space-lg);

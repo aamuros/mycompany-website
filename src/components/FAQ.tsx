@@ -43,15 +43,7 @@ export default function FAQ() {
         <div className={styles.inner}>
           <div className={styles.header}>
             <p className="section-label">FAQ</p>
-            <h2 className="section-title">
-              Frequently
-              <br />
-              asked.
-            </h2>
-            <p className={styles.headerNote}>
-              Still have questions?{" "}
-              <a href="#contact">Send me a message.</a>
-            </p>
+            <h2 className="section-title">Frequently asked.</h2>
           </div>
           <div className={styles.list}>
             {faqs.map((item, i) => (
@@ -65,23 +57,23 @@ export default function FAQ() {
                   aria-expanded={open === i}
                 >
                   <span>{item.q}</span>
-                  <svg
-                    className={styles.chevron}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="6 9 12 15 18 9" />
-                  </svg>
+                  <span className={styles.chevron} aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M4 6L8 10L12 6"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </button>
-                {open === i && (
+                <div className={styles.answerWrapper}>
                   <div className={styles.answer}>
                     <p>{item.a}</p>
                   </div>
-                )}
+                </div>
               </div>
             ))}
           </div>

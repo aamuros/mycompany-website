@@ -100,7 +100,7 @@ export default function Contact() {
               </div>
               <div className={styles.detail}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.0 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-5.93-5.93 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
                 <a href="tel:+639660020335">+639 660 020 335</a>
               </div>
@@ -149,102 +149,116 @@ export default function Contact() {
             </div>
           </div>
 
-          <form className={styles.form} onSubmit={handleSubmit} id="contact-form" noValidate>
-            <div className={styles.fieldGroup}>
+          {status === "success" ? (
+            <div className={styles.successPanel}>
+              <div className={styles.successIcon} aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                  <circle cx="14" cy="14" r="13" stroke="currentColor" strokeWidth="1.5" />
+                  <path d="M8.5 14.5L12 18L19.5 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <h3 className={styles.successTitle}>Message sent</h3>
+              <p className={styles.successText}>{serverMessage}</p>
+              <button
+                className={styles.successReset}
+                onClick={() => setStatus("idle")}
+              >
+                Send another message
+              </button>
+            </div>
+          ) : (
+            <form className={styles.form} onSubmit={handleSubmit} id="contact-form" noValidate>
+              <div className={styles.fieldGroup}>
+                <div className={styles.field}>
+                  <label htmlFor="name" className={styles.label}>
+                    Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Your name"
+                    className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
+                    required
+                  />
+                  {errors.name && (
+                    <span className={styles.errorText}>{errors.name}</span>
+                  )}
+                </div>
+                <div className={styles.field}>
+                  <label htmlFor="email" className={styles.label}>
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
+                    required
+                  />
+                  {errors.email && (
+                    <span className={styles.errorText}>{errors.email}</span>
+                  )}
+                </div>
+              </div>
               <div className={styles.field}>
-                <label htmlFor="name" className={styles.label}>
-                  Name *
+                <label htmlFor="company" className={styles.label}>
+                  Company
                 </label>
                 <input
                   type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Your name"
-                  className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
-                  required
+                  id="company"
+                  name="company"
+                  placeholder="Your company (optional)"
+                  className={styles.input}
                 />
-                {errors.name && (
-                  <span className={styles.errorText}>{errors.name}</span>
-                )}
               </div>
               <div className={styles.field}>
-                <label htmlFor="email" className={styles.label}>
-                  Email *
+                <label htmlFor="message" className={styles.label}>
+                  Message *
                 </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="you@example.com"
-                  className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  placeholder="Tell me about your project — what do you need built?"
+                  className={`${styles.textarea} ${errors.message ? styles.inputError : ""}`}
                   required
                 />
-                {errors.email && (
-                  <span className={styles.errorText}>{errors.email}</span>
+                {errors.message && (
+                  <span className={styles.errorText}>{errors.message}</span>
                 )}
               </div>
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="company" className={styles.label}>
-                Company
-              </label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                placeholder="Your company (optional)"
-                className={styles.input}
-              />
-            </div>
-            <div className={styles.field}>
-              <label htmlFor="message" className={styles.label}>
-                Message *
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={5}
-                placeholder="Tell me about your project — what do you need built?"
-                className={`${styles.textarea} ${errors.message ? styles.inputError : ""}`}
-                required
-              />
-              {errors.message && (
-                <span className={styles.errorText}>{errors.message}</span>
+
+              {/* Honeypot — hidden from real users, bots fill it and get rejected */}
+              <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, overflow: "hidden" }}>
+                <label htmlFor="website">Website</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className={styles.submit}
+                disabled={status === "submitting"}
+                id="contact-submit"
+              >
+                {status === "submitting" ? "Sending..." : "Send Message"}
+              </button>
+
+              {status === "error" && (
+                <div className={`${styles.statusMessage} ${styles.error}`}>
+                  {serverMessage}
+                </div>
               )}
-            </div>
-
-            {/* Honeypot — hidden from real users, bots fill it and get rejected */}
-            <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, overflow: "hidden" }}>
-              <label htmlFor="website">Website</label>
-              <input
-                type="text"
-                id="website"
-                name="website"
-                tabIndex={-1}
-                autoComplete="off"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className={styles.submit}
-              disabled={status === "submitting"}
-              id="contact-submit"
-            >
-              {status === "submitting" ? "Sending..." : "Send Message"}
-            </button>
-
-            {status === "success" && (
-              <div className={`${styles.statusMessage} ${styles.success}`}>
-                {serverMessage}
-              </div>
-            )}
-            {status === "error" && (
-              <div className={`${styles.statusMessage} ${styles.error}`}>
-                {serverMessage}
-              </div>
-            )}
-          </form>
+            </form>
+          )}
         </div>
       </div>
     </section>
