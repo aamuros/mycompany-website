@@ -9,6 +9,9 @@ const NOTIFICATION_EMAIL =
   process.env.NOTIFICATION_EMAIL || "hello@example.com";
 const FROM_EMAIL = process.env.FROM_EMAIL || "contact@example.com";
 
+/** Timeout for email sending operations (10 seconds) */
+const EMAIL_TIMEOUT_MS = 10_000;
+
 export async function sendContactNotification(
   data: ContactFormData
 ): Promise<{ success: boolean; error?: string }> {
@@ -70,14 +73,17 @@ export async function sendContactNotification(
   }
 
   try {
-    const { error } = await resend.emails.send({
-      from: `Contact Form <${FROM_EMAIL}>`,
-      to: [NOTIFICATION_EMAIL],
-      replyTo: email,
-      subject,
-      text: textBody,
-      html: htmlBody,
-    });
+    const { error } = await withTimeout(
+      resend.emails.send({
+        from: `Contact Form <${FROM_EMAIL}>`,
+        to: [NOTIFICATION_EMAIL],
+        replyTo: email,
+        subject,
+        text: textBody,
+        html: htmlBody,
+      }),
+      EMAIL_TIMEOUT_MS
+    );
 
     if (error) {
       console.error("Resend error:", error);
@@ -86,6 +92,10 @@ export async function sendContactNotification(
 
     return { success: true };
   } catch (err) {
+    if (err instanceof TimeoutError) {
+      console.error("Email send timeout after", EMAIL_TIMEOUT_MS, "ms");
+      return { success: false, error: "Email service timeout" };
+    }
     console.error("Email send error:", err);
     return { success: false, error: "Failed to send email" };
   }
@@ -98,4 +108,28 @@ function escapeHtml(str: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+class TimeoutError extends Error {
+  constructor(ms: number) {
+    super(`Operation timed out after ${ms}ms`);
+    this.name = "TimeoutError";
+  }
+}
+
+async function withTimeout<T>(
+  promise: Promise<T>,
+  ms: number
+): Promise<T> {
+  let timeoutId: ReturnType<typeof setTimeout>;
+
+  const timeout = new Promise<never>((_, reject) => {
+    timeoutId = setTimeout(() => reject(new TimeoutError(ms)), ms);
+  });
+
+  try {
+    return await Promise.race([promise, timeout]);
+  } finally {
+    clearTimeout(timeoutId!);
+  }
 }
