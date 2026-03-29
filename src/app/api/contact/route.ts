@@ -50,10 +50,11 @@ export async function POST(request: Request) {
   // Send email notification
   const emailResult = await sendContactNotification(validation.data);
   if (!emailResult.success) {
+    console.error("Contact form email failed:", emailResult.error);
     return NextResponse.json(
       {
         success: false,
-        error: emailResult.error || "Failed to process your request. Please try again.",
+        error: "Failed to send your message. Please try again or reach out directly.",
       },
       { status: 500 }
     );
