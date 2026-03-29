@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 import { validateContactForm } from "@/lib/validation";
-import { checkRateLimit, getClientIdentifier } from "@/lib/rate-limit";
+import { checkRateLimit, getClientIdentifier, getClientIp } from "@/lib/rate-limit";
 import { sendContactNotification } from "@/lib/email";
+import { logContactSubmission } from "@/lib/contact-log";
 
 export async function POST(request: Request) {
   // Rate limiting
   const clientId = getClientIdentifier(request);
-  const rateLimit = checkRateLimit(clientId);
+  const rateLimit = await checkRateLimit(clientId);
 
   if (!rateLimit.allowed) {
     return NextResponse.json(
@@ -47,9 +49,19 @@ export async function POST(request: Request) {
     );
   }
 
+  // Persist to database as backup (fire-and-forget, never blocks)
+  const clientIp = getClientIp(request);
+  logContactSubmission(validation.data, clientIp).catch((err) =>
+    console.error("Contact log error:", err)
+  );
+
   // Send email notification
   const emailResult = await sendContactNotification(validation.data);
   if (!emailResult.success) {
+    Sentry.captureMessage("Contact form email failed", {
+      level: "error",
+      extra: { email: validation.data.email, error: emailResult.error },
+    });
     console.error("Contact form email failed:", emailResult.error);
     return NextResponse.json(
       {

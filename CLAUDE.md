@@ -9,7 +9,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run dev` — start dev server
 - `npm run build` — production build
 - `npm run lint` — run ESLint
-- No test framework is configured
+- `npm test` — run Vitest test suite
+- `npm run test:watch` — run Vitest in watch mode
 
 ## Architecture
 
@@ -23,15 +24,21 @@ Single-page marketing site for "Construct" (a digital products company) built wi
 
 **Shared libs** in `src/lib/`:
 - `validation.ts` — Zod schema for contact form (includes control-char stripping)
-- `rate-limit.ts` — in-memory sliding-window rate limiter (5 req/min per IP)
+- `rate-limit.ts` — sliding-window rate limiter (5 req/min per IP); uses Upstash Redis in production, falls back to in-memory in dev
+- `redis.ts` — shared Upstash Redis client (null when credentials are missing)
+- `contact-log.ts` — persists contact submissions to Redis as backup to email
 - `email.ts` — Resend integration; logs to console in dev when `RESEND_API_KEY` is unset
 
 **Security layers:**
-- `next.config.ts` — security headers (CSP, HSTS, X-Frame-Options, etc.)
+- `next.config.ts` — security headers (CSP, HSTS, X-Frame-Options, etc.) + Sentry integration
 - `src/proxy.ts` — middleware enforcing body size limits and JSON content-type on API routes
+- Sentry error monitoring via `@sentry/nextjs` (client, server, edge configs at project root)
 
 ## Environment Variables
 
 - `RESEND_API_KEY` — Resend API key (optional; dev mode logs emails to console)
 - `NOTIFICATION_EMAIL` — recipient for contact form submissions
 - `FROM_EMAIL` — sender address for outbound emails
+- `UPSTASH_REDIS_REST_URL` — Upstash Redis REST URL (optional; dev mode uses in-memory fallback)
+- `UPSTASH_REDIS_REST_TOKEN` — Upstash Redis REST token
+- `NEXT_PUBLIC_SENTRY_DSN` — Sentry DSN for error monitoring (optional; disabled when unset)

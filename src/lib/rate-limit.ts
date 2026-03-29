@@ -1,38 +1,4 @@
-interface RateLimitEntry {
-  count: number;
-  resetTime: number;
-}
-
-const store = new Map<string, RateLimitEntry>();
-
-// Clean up expired entries every 60 seconds
-const CLEANUP_INTERVAL = 60 * 1000;
-let lastCleanup = Date.now();
-
-/** Maximum number of tracked IPs to prevent memory exhaustion */
-const MAX_STORE_SIZE = 10_000;
-
-function cleanup() {
-  const now = Date.now();
-  if (now - lastCleanup < CLEANUP_INTERVAL) return;
-  lastCleanup = now;
-
-  for (const [key, entry] of store) {
-    if (now > entry.resetTime) {
-      store.delete(key);
-    }
-  }
-
-  // Emergency eviction if store grows too large (DoS protection)
-  if (store.size > MAX_STORE_SIZE) {
-    const entries = [...store.entries()];
-    entries.sort((a, b) => a[1].resetTime - b[1].resetTime);
-    const toRemove = entries.slice(0, entries.length - MAX_STORE_SIZE);
-    for (const [key] of toRemove) {
-      store.delete(key);
-    }
-  }
-}
+import { redis } from "./redis";
 
 export interface RateLimitConfig {
   /** Maximum number of requests allowed in the window */
@@ -52,23 +18,82 @@ const DEFAULT_CONFIG: RateLimitConfig = {
   windowMs: 60 * 1000, // 1 minute
 };
 
-export function checkRateLimit(
+// ── Redis-backed rate limiter (production) ──────────────────────────
+
+async function checkRateLimitRedis(
   identifier: string,
-  config: RateLimitConfig = DEFAULT_CONFIG
+  config: RateLimitConfig
+): Promise<RateLimitResult> {
+  const key = `ratelimit:${identifier}`;
+  const now = Date.now();
+  const windowStart = now - config.windowMs;
+
+  // Sliding window: remove old entries, add current, count
+  const pipeline = redis!.pipeline();
+  pipeline.zremrangebyscore(key, 0, windowStart);
+  pipeline.zadd(key, { score: now, member: `${now}:${Math.random()}` });
+  pipeline.zcard(key);
+  pipeline.pexpire(key, config.windowMs);
+
+  const results = await pipeline.exec();
+  const count = results[2] as number;
+
+  const resetTime = now + config.windowMs;
+  if (count > config.maxRequests) {
+    return { allowed: false, remaining: 0, resetTime };
+  }
+  return {
+    allowed: true,
+    remaining: config.maxRequests - count,
+    resetTime,
+  };
+}
+
+// ── In-memory rate limiter (dev / fallback) ─────────────────────────
+
+interface RateLimitEntry {
+  count: number;
+  resetTime: number;
+}
+
+const memoryStore = new Map<string, RateLimitEntry>();
+const CLEANUP_INTERVAL = 60 * 1000;
+const MAX_STORE_SIZE = 10_000;
+let lastCleanup = Date.now();
+
+function cleanupMemoryStore() {
+  const now = Date.now();
+  if (now - lastCleanup < CLEANUP_INTERVAL) return;
+  lastCleanup = now;
+
+  for (const [key, entry] of memoryStore) {
+    if (now > entry.resetTime) memoryStore.delete(key);
+  }
+
+  if (memoryStore.size > MAX_STORE_SIZE) {
+    const entries = [...memoryStore.entries()];
+    entries.sort((a, b) => a[1].resetTime - b[1].resetTime);
+    for (const [key] of entries.slice(0, entries.length - MAX_STORE_SIZE)) {
+      memoryStore.delete(key);
+    }
+  }
+}
+
+function checkRateLimitMemory(
+  identifier: string,
+  config: RateLimitConfig
 ): RateLimitResult {
-  cleanup();
+  cleanupMemoryStore();
 
   const now = Date.now();
-  const entry = store.get(identifier);
+  const entry = memoryStore.get(identifier);
 
-  // No existing entry or window expired — allow and start fresh
   if (!entry || now > entry.resetTime) {
     const resetTime = now + config.windowMs;
-    store.set(identifier, { count: 1, resetTime });
+    memoryStore.set(identifier, { count: 1, resetTime });
     return { allowed: true, remaining: config.maxRequests - 1, resetTime };
   }
 
-  // Within window — check count
   if (entry.count < config.maxRequests) {
     entry.count++;
     return {
@@ -78,67 +103,68 @@ export function checkRateLimit(
     };
   }
 
-  // Rate limited
-  return {
-    allowed: false,
-    remaining: 0,
-    resetTime: entry.resetTime,
-  };
+  return { allowed: false, remaining: 0, resetTime: entry.resetTime };
 }
 
-// Regex to match a valid IPv4 or simplified IPv6 pattern
+// ── Public API ──────────────────────────────────────────────────────
+
+export async function checkRateLimit(
+  identifier: string,
+  config: RateLimitConfig = DEFAULT_CONFIG
+): Promise<RateLimitResult> {
+  if (redis) {
+    try {
+      return await checkRateLimitRedis(identifier, config);
+    } catch (err) {
+      console.error("Redis rate-limit error, falling back to memory:", err);
+    }
+  }
+  return checkRateLimitMemory(identifier, config);
+}
+
+// ── IP extraction ───────────────────────────────────────────────────
+
 const IPV4_REGEX = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 const IPV6_REGEX = /^[0-9a-fA-F:]+$/;
 
-/**
- * Validate that a string looks like an IP address to prevent
- * attackers from using crafted X-Forwarded-For values.
- */
 function isValidIp(ip: string): boolean {
-  if (ip.length > 45) return false; // max IPv6 length
+  if (ip.length > 45) return false;
   return IPV4_REGEX.test(ip) || IPV6_REGEX.test(ip);
 }
 
-/**
- * Extract a client identifier from the request for rate limiting.
- * Uses X-Forwarded-For (first hop) or X-Real-IP, validated to be
- * a plausible IP address format.
- */
 export function getClientIdentifier(request: Request): string {
-  // Try X-Forwarded-For first (standard behind proxies/Vercel/Cloudflare)
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {
     const firstIp = forwarded.split(",")[0].trim();
-    if (firstIp && isValidIp(firstIp)) {
-      return `ip:${firstIp}`;
-    }
+    if (firstIp && isValidIp(firstIp)) return `ip:${firstIp}`;
   }
 
-  // Fallback to X-Real-IP
   const realIp = request.headers.get("x-real-ip");
   if (realIp) {
     const trimmed = realIp.trim();
-    if (isValidIp(trimmed)) {
-      return `ip:${trimmed}`;
-    }
+    if (isValidIp(trimmed)) return `ip:${trimmed}`;
   }
 
-  // Last resort: use a hash based on user-agent to at least differentiate clients
   const ua = request.headers.get("user-agent") || "no-ua";
   return `ua:${simpleHash(ua)}`;
 }
 
-/** Simple string hash for fallback client identification */
+/** Extract raw IP string for logging (not prefixed) */
+export function getClientIp(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    const firstIp = forwarded.split(",")[0].trim();
+    if (firstIp && isValidIp(firstIp)) return firstIp;
+  }
+  const realIp = request.headers.get("x-real-ip");
+  if (realIp && isValidIp(realIp.trim())) return realIp.trim();
+  return "unknown";
+}
+
 function simpleHash(str: string): string {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash + char) | 0;
+    hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
   }
   return Math.abs(hash).toString(36);
-}
-
-/** Get current store size (for health/monitoring) */
-export function getRateLimitStoreSize(): number {
-  return store.size;
 }
