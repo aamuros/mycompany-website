@@ -20,11 +20,28 @@ export const metadata: Metadata = {
     "digital products",
     "website design",
   ],
+  metadataBase: new URL("https://adistudio.ph"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "ADIstudio — Digital Products That Work",
     description:
       "Websites, applications, and systems — built for your business. Based in the Philippines.",
+    url: "https://adistudio.ph",
+    siteName: "ADIstudio",
+    locale: "en_PH",
     type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "ADIstudio — Digital Products That Work",
+    description:
+      "Websites, applications, and systems — built for your business. Based in the Philippines.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

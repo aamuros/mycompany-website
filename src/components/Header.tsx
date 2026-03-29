@@ -26,13 +26,22 @@ export default function Header() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [menuOpen]);
+
   return (
     <header
       className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}
       id="header"
     >
       <div className={styles.headerInner}>
-        <a href="#" className={styles.logo} aria-label="Home">
+        <a href="/" className={styles.logo} aria-label="Home">
           <svg
             className={styles.logoIcon}
             viewBox="0 0 32 32"
